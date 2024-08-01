@@ -2,3 +2,5 @@ langchain
 python-dotenv
 streamlit
 flask
+streamlit
+google-generativeai
