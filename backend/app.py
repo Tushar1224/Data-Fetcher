@@ -4,11 +4,16 @@ import sqlite3
 import streamlit as st
 import os
 import sql as _sql;
+import pandas as pd
 
 import google.generativeai as genai
 
 #configure our API key
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+
+#initialize cursor
+conn=sqlite3.connect("data_fetcher.db")
+cursor=conn.cursor()
 
 #Function to load google gemini model and provide query as response
 def get_gemini_response(question,prompt):
@@ -45,12 +50,9 @@ prompt=[
 
 
 def read_sql_query(sql):
-    conn=sqlite3.connect("data_fetcher.db")
-    cursor=conn.cursor()
     cursor.execute(sql)
     rows=cursor.fetchall()
     conn.commit()
-    conn.close()
     return rows
 
 def get_result(questions,prompt):
@@ -72,6 +74,9 @@ submit = st.button("Ask the questions")
 if submit:
     data= get_result(questions,prompt)
     st.subheader("The Response is ")
-    for row in data:
-        print(row)
-        st.header(row)
+    header_list=list(cursor.description[0])
+    updated_header=list(filter(lambda x : x!=None,header_list))
+    updated_result=[list(d) for d in data]
+    table=pd.DataFrame(updated_result, columns=updated_header)
+    table.index +=1
+    st.dataframe(table)

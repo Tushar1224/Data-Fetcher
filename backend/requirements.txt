@@ -4,3 +4,4 @@ streamlit
 flask
 streamlit
 google-generativeai
+pandas
