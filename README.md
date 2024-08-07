@@ -1,9 +1,11 @@
 ﻿# Database-Query-Generator-And-Data-Fetcher
 # Commands to run the project:
-run sql.py for setting up the db
-run command : streamlit run app.py to run the application
+### command for setting up the db:
+#### python3 sql.py
+### command to run the application:
+#### streamlit run app.py
 
-# DProject Details:
+# Project Details:
 
 ## Situation(Objective)
 The objective of project is to create an AI-powered application that allows users
